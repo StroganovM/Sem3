@@ -1,6 +1,9 @@
 #include <iostream>
 #include <stdlib.h> 
 #include <time.h>
+#include <vector>
+
+
 class FIO {
 	std::string name, surname, lastname;
 public:
@@ -95,6 +98,15 @@ public:
 
 		return num;
 	}
+	float get_sredball(){
+		return srednyball;
+	}
+	std::string get_funding() {
+		return funding;
+	}
+	std::string get_stipuha() {
+		return stipuha;
+	}
 
 };
 std::ostream& operator << (std::ostream& out, const Student& a) {
@@ -117,86 +129,69 @@ std::istream& operator>>(std::istream& input, Student& a) {
 	return input;
 }
 class archive {
-	int capacity;
-	int size;
-	Student* list;
+private:
+	std:: vector<Student> students;
+	std::string archive_name;
+
 public:
-	archive() : size(0), capacity(5) {
-		list = new Student[capacity];
-	}
-	archive(int _capacity) :
-		size(0), capacity(_capacity)
-	{
-		list = new Student[capacity];
-	}
-	archive(const archive& a) :
-		size(a.size), capacity(a.capacity), list(a.list)
-	{}
-	~archive() {
-		delete[] list;
-		list = nullptr;
+	archive(std::string name) : archive_name(name) {}
+
+	~archive() {}
+
+	void add(const Student& student) {
+		students.push_back(student);
 	}
 
-	void add(const Student& a) {
-		if (size >= capacity) {
-			int new_capacity = capacity * 2;
-			Student* new_list = new Student[new_capacity];
-			for (int i = 0; i < capacity; i++) {
-				new_list[i] = list[i];
-			}
-			delete[] list;
-			list = new_list;
-			capacity = new_capacity;
-		}
-		list[size] = a;
-		size++;
-	}
-	void search_student(const FIO& a) {
+	void find(const FIO& a) {
+		int index = 0;
 		int counter = 0;
-		for (int i = 0; i < size; i++) {
-			if (a == list[i].get_student_FIO()) {
-				counter++;
-			}
-		}
-		int* doc_list = new int[counter];
-		int counter1 = 0;
-		if (counter != 0) {
-			for (int i = 0; i < size; i++) {
-				if (a == list[i].get_student_FIO()) {
-					doc_list[counter1] = i;
-					counter1++;
-				}
-			}
-			for (int i = 0; i < counter1; i++) {
-				std::cout << "\n" << doc_list[i] + 1 << ") " << list[i];
-			}
-
-		}
-		else {
-			std::cout << "not found";
-		}
-	}
-	void remove(int _count) {
-		int index = _count - 1;
-		for (int i = index; i < size - 1; i++) {
-			if (list[i].get_id() == _count) {
-				list[i] = list[i + 1];
+		for (int i = 0; i < students.size(); i++) {
+			if (a == students[i].get_student_FIO()) {
+				 index = i;
+				 std::cout << students[index] << std::endl;
 			}
 			
+			else {
+				system("cls");
+				std::cout << "not found" << std::endl;
+			}
 		}
-		size--;
+		
+		
+	}
+		
+	
+	bool deletestudent(int id) {
+		auto it = remove_if(students.begin(), students.end(), [id](Student& student) {
+			return student.get_id() == id;
+			});
+		if (it != students.end()) {
+			students.erase(it, students.end());
+			return true;
+		}
+		return false;
 	}
 	
 	void display() {
-		for (int i = 0; i < size; i++) {
-			std::cout << "\n" << i + 1 << ") " << list[i];
+		std::cout << "Archive (sorted by name): " << archive_name << std::endl;
+		std::cout << "--------------------------------------------------------------------------" << std::endl;
+		std::cout << "Student ID  |  Full Name          |  Average score  |  Budget  |  Scholarship" << std::endl;
+		std::cout << "--------------------------------------------------------------------------" << std::endl;
+		for (auto& student : students) {
+			std::cout << student.get_id() << "          |  " << student.get_FIO() << "          |  " << student.get_sredball()
+				<< "  |  " << student.get_funding()  << "  |  "
+				<< student.get_stipuha()  << std::endl;
 		}
 	}
+	
+	
+	
+	
 };
 int main() {
 	int choose = 0;
 	Student new_student;
-	archive baza;
+	archive studentArchive("Student Archive");
 	FIO student;
 	int index = 0, sid=0;
 	while (true) {
@@ -206,26 +201,25 @@ int main() {
 		case 1:
 
 			std::cin >> new_student;
-			baza.add(new_student);
+			studentArchive.add(new_student);
 			choose = 0;
 			break;
 		case 2:
-			baza.display();
+			studentArchive.display();
 			std::cout << "\n";
 			system("pause");
 			choose = 0;
 			break;
 		case 3:
-			
 			std::cin >> student;
-			baza.search_student(student);
+			studentArchive.find(student);
 			choose = 0;
 			system("pause");
 			break;
 		case 4:
 			std::cout << "Input num of sudbillet: ";
 			std::cin >> sid;
-			baza.remove(sid);
+			studentArchive.deletestudent(sid);
 			choose = 0;
 			break;
 		case 5:
