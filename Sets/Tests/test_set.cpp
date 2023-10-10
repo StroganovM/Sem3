@@ -1,7 +1,7 @@
 #include <gtest.h>
 #include <climits>
 #include "set.h"
-
+#include "gtest.h"
 TEST(TSet, can_combine_two_sets_of_equal_size)
 {
   const int size = 5;

@@ -2,7 +2,7 @@
 #define INCLUDE_SET_H_
 
 #include <iostream>
-#include "bitfield.h"
+#include "..\BitField\bitfield.h"
 
 class TSet {
 private:
@@ -25,8 +25,8 @@ public:
   TSet operator* (const TSet &s);        // пересечение
   TSet operator~ ();                     // дополнение
 
-  int operator== (const TSet &s) const;
-  int operator!= (const TSet &s) const;
+  bool operator== (const TSet &s) const;
+  bool operator!= (const TSet &s) const;
   TSet& operator=(const TSet &s);
 
   friend std::istream& operator>>(std::istream& in, TSet &bf);

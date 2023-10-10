@@ -18,10 +18,10 @@ private:
   // служебные методы
 
   // индекс в pМем для бита pos
-  size_t GetMemIndex(size_t pos) const noexcept { /* <...> */ }
+  size_t GetMemIndex(size_t pos) const noexcept {}
 
   // битовая маска для бита pos
-  elem_type GetMemMask(size_t pos) const noexcept { /* <...> */ }
+  elem_type GetMemMask(size_t pos) const noexcept {}
 
 public:
   // обязательный функционал
@@ -44,7 +44,7 @@ public:
   TBitField  operator~(void);                            // отрицание
 
   // получить длину (к-во битов)
-  size_t size() const noexcept { /* <...> */ }
+  size_t size() const noexcept {}
 
   friend void swap(TBitField& lhs, TBitField& rhs) noexcept;
 
