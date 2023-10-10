@@ -1,1 +1,1 @@
-#include "gtest.h"int main(int argc, char** argv) {	::testing::InitGoogleTest(&argc, argv);	RUN_ALL_TESTS();	system("pause");	return 0;}
+#include "../gtest_new/gtest.h"#include "../STL/STL.h"int main(int argc, char** argv) {	::testing::InitGoogleTest(&argc, argv);	RUN_ALL_TESTS();	system("pause");	return 0;}
