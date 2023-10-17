@@ -105,53 +105,53 @@ int main() {
 			int n;
 			system("cls");
 
-#define USE_SET 2
+#define USE_SET 1
 #if USE_SET == 1
-			int count = 0;
+			int k = 0;
 			std::cout << "Запущен демонстрационный пример на тестирование структуры данных множество\n";
 			std::cout << "Решето Эратосфена.\n" << "Введите верхнюю границу целых значений:";
 			std::cin >> n;
 			std::cout << "Результат:";
-			TSet r(n);
+			TSet rest(n);
 			TSet res(n);
-			res = ~r;
-			for (int i = 2; i * i <= n - 1; i++) {
-				if (res.IsMember(i) == true) {
-					for (int k = 2; i * k <= n - 1; k++) {
-						res.DelElem(i * k);
+			res = ~rest;
+			for (int i = 2; i <= sqrt(n - 1); i++) {
+				if (res.IsMember(i) == 1) {
+					for (int j = 2; i * j <= n - 1; j++) {
+						res.DelElem(i * j);
 					}
 				}
 			}
 			for (int i = 0; i < n; i++) {
-				if (res.IsMember(i) == true) {
-					count++;
+				if (res.IsMember(i) == 1) {
+					k++;
 				}
 			}
-			std::cout << res << "\nВ первых " << n << " числах " << count << " простых чисел.\n";
+			std::cout << res << "\nВ первых " << n << " числах " << k << " простых чисел.\n";
 			system("pause");
 			system("cls");
 #else
-			int count = 0;
+			int k = 0;
 			std::cout << "Запущен демонстрационный пример на тестирование структуры данных битовое поле\n";
 			std::cout << "Решето Эратосфена.\n" << "Введите верхнюю границу целых значений:";
 			std::cin >> n;
 			std::cout << "Результат:";
-			TBitField r(n);
+			TBitField rest(n);
 			TBitField res(n);
-			res = ~r;
-			for (int i = 2; i * i <= n - 1; i++) {
-				if (res.test(i) == true) {
-					for (int k = 2; i * k <= n - 1; k++) {
-						res.reset(i * k);
+			res = ~rest;
+			for (int i = 2; i <=sqrt( n - 1); i++) {
+				if (res.test(i) == 1) {
+					for (int j = 2; i * j <= n - 1; j++) {
+						res.reset(i * j);
 					}
 				}
 			}
 			for (int i = 0; i < n; i++) {
-				if (res.test(i) == true) {
-					count++;
+				if (res.test(i) == 1) {
+					k++;
 				}
 			}
-			std::cout << res << "\nВ первых " << n << " числах " << count << " простых чисел.\n";
+			std::cout << res << "\nВ первых " << n << " числах " << k << " простых чисел.\n";
 				system("pause");
 			system("cls");
 #endif
